@@ -1,0 +1,9 @@
+Crescente = http://localhost:3000/products?sort=price_asc
+
+Decrescente = http://localhost:3000/api/products?sort=price_desc
+
+Pegar tudo = http://localhost:3000/api/products
+
+Alterar = http://localhost:3000/api/products/1 (id) e adicionar body
+
+Deletar = http://localhost:3000/api/products/4 (id)

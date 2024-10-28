@@ -1,5 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
+import Supplier from './Supplier';
 
 class Product extends Model {
   public id!: number;
@@ -8,7 +9,7 @@ class Product extends Model {
   public stock!: number;
   public description!: string;
   public imageURL!: string;
-  public supplier!: string;
+  public supplierID!: string;
 }
 
 Product.init({
@@ -38,13 +39,22 @@ Product.init({
     type: DataTypes.STRING,
     allowNull: true,
   },
-  supplier: {
-    type: DataTypes.STRING,
+  supplierID: {
+    type: DataTypes.INTEGER,
     allowNull: true,
+    references: {
+      model: Supplier,
+      key: 'id',
+    },
+    onDelete: 'CASCADE',
   },
 }, {
   sequelize,
   modelName: 'Product',
 });
+
+Product.belongsTo(Supplier, { foreignKey: 'supplierId', as: 'supplier' });
+Supplier.hasMany(Product, { foreignKey: 'supplierId', as: 'products' });
+
 
 export default Product;

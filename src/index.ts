@@ -7,6 +7,7 @@ import cors from  'cors';
 import sequelize from './config/database';
 import productRoutes from './routes/productRoutes';
 import clientRoutes from './routes/clientRoutes';
+import supplierRoutes from './routes/supplierRoutes'
 
 
 dotenv.config();
@@ -33,3 +34,4 @@ sequelize.sync({ force: false }).then(() => {
 
   app.use('/api', productRoutes);
   app.use('/api', clientRoutes);
+  app.use('/api', supplierRoutes);

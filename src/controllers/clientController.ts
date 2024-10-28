@@ -49,3 +49,19 @@ export const updateClient = async (req: Request, res: Response) => {
 };
 
 
+export const deleteClient = async (req: Request, res: Response) => {
+    const {id} = req.params;
+
+    try{
+        const client = await Client.findByPk(id);
+        if (!client) {
+            res.status(404).json({error: 'Cliente não encontrado'});
+            return;
+        }
+        await client.destroy();
+        res.json({message: 'Cliente excluido com sucesso'});
+    } catch (error){
+        res.status(500).json({error: 'Erro ao excluir cliente'});
+    }
+};
+

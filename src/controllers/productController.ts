@@ -21,11 +21,11 @@ export const getAllProducts = async (req: Request, res: Response) => {
 
 
 export const createProduct = async (req: Request, res: Response) => {
-  const { name, price, stock, description, supplier } = req.body;
+  const { name, price, stock, description, supplierID } = req.body;
   const imageURL = req.file ? req.file.path : null;
 
 
-  const product = await Product.create({ name, price, stock, description, supplier, imageURL });
+  const product = await Product.create({ name, price, stock, description, supplierID, imageURL });
   res.json(product);
 };
 

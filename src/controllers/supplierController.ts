@@ -31,6 +31,19 @@ export const updateSupplier = async (req: Request, res: Response) => {
   }
 };
 
+export const getlAllSupplier = async (req: Request, res: Response) => {
+    const {name, contact} = req.query;
+
+    const whereClause: any = {};
+
+    try{
+        const supplier = await Supplier.findAll({ where: whereClause});
+        res.json(supplier);
+    } catch (error){
+        res.status(500).json({error: 'Erro ao listar fornecedores'});
+    }
+};
+
 export const deleteSupplier = async (req: Request, res: Response) => {
   const { id } = req.params;
 

@@ -7,3 +7,26 @@ Pegar tudo = http://localhost:3000/api/products
 Alterar = http://localhost:3000/api/products/1 (id) e adicionar body
 
 Deletar = http://localhost:3000/api/products/4 (id)
+
+
+
+Cliente
+
+nome
+contato
+endereço
+cpf/cnpj
+
+
+
+Produto
+
+nome
+preço
+estoque
+descrição
+imagem 
+fornecedor
+
+
+nome, cnpj 

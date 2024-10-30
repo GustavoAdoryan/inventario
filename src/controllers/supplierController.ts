@@ -1,12 +1,13 @@
 import { Request, Response } from 'express';
 import  Supplier  from '../models/Supplier';
 import  Product  from '../models/Product';
+import { Op } from 'sequelize';
 
 export const createSupplier = async (req: Request, res: Response) => {
   const { name, cnpj, contact, address } = req.body;
 
   try {
-    const supplier = await Supplier.create({ name, cnpj, contact, address });
+    const supplier = await  Supplier.create({name, cnpj, contact, address });
     res.status(201).json(supplier);
   } catch (error) {
     res.status(500).json({ error: 'Erro ao cadastrar fornecedor' });
@@ -35,6 +36,9 @@ export const getlAllSupplier = async (req: Request, res: Response) => {
     const {name, contact} = req.query;
 
     const whereClause: any = {};
+
+    if(name) whereClause.name = {[Op.like]: `%${name}%`};
+    if(contact) whereClause.contact = {[Op.like]: `%${contact}%`};
 
     try{
         const supplier = await Supplier.findAll({ where: whereClause});

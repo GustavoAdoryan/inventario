@@ -9,7 +9,7 @@ class Product extends Model {
   public stock!: number;
   public description!: string;
   public imageURL!: string;
-  public supplierID!: string;
+  public supplierID!: number;
 }
 
 Product.init({

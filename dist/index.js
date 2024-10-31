@@ -17,6 +17,13 @@ const PORT = process.env.PORT || 3000;
 app.use((0, body_parser_1.json)());
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
+
+
+app.use('/api', productRoutes_1.default);
+app.use('/api', clientRoutes_1.default);
+app.use('/api', supplierRoutes_1.default);
+
+
 app.get('/', (req, res) => {
     res.send('Sistema de Gestão de Inventário');
 });
@@ -26,6 +33,4 @@ app.listen(PORT, () => {
 database_1.default.sync({ force: false }).then(() => {
     console.log('Banco de dados sincronizado');
 });
-app.use('/api', productRoutes_1.default);
-app.use('/api', clientRoutes_1.default);
-app.use('/api', supplierRoutes_1.default);
+

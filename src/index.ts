@@ -24,14 +24,15 @@ app.get('/', (req, res) => {
   res.send('Sistema de Gestão de Inventário');
 });
 
+app.use('/api', productRoutes);
+app.use('/api', clientRoutes);
+app.use('/api', supplierRoutes);
+
+sequelize.sync({ force: false }).then(() => {
+  console.log('Banco de dados sincronizado');
+});
+
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
 
-sequelize.sync({ force: false }).then(() => {
-    console.log('Banco de dados sincronizado');
-  });
-
-  app.use('/api', productRoutes);
-  app.use('/api', clientRoutes);
-  app.use('/api', supplierRoutes);

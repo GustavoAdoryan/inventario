@@ -1,5 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
+import Order from './Order';
 
 export class Client extends Model {
 
@@ -15,31 +16,35 @@ export class Client extends Model {
 
 Client.init(
     {
-    id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-    },
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    contact: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    address: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    cpf_cnpj: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-    },
+        id: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+        },
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        contact: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        address: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        cpf_cnpj: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: true,
+        },
     },
     {
         sequelize,
-        tableName: 'Clients',
+        modelName: 'Clients',
     }
 );
+
+
+
+export default Client;

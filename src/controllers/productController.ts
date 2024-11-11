@@ -24,32 +24,46 @@ export const createProduct = async (req: Request, res: Response) => {
   const { name, price, stock, description, supplierID } = req.body;
   const imageURL = req.file ? req.file.path : null;
 
-
+  if (price <= 0) {
+    res.status(400).json({ error: 'O preço unitário deve ser positivo' });
+    return;
+  }
   const product = await Product.create({ name, price, stock, description, supplierID, imageURL });
   res.json(product);
 };
 
 
-export const updateProduct = async (req: Request, res: Response)  => {
+export const updateProduct = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { name, price, stock, description, supplier } = req.body;
   const imageUrl = req.file ? req.file.path : null;
 
   const product = await Product.findByPk(id);
-  if (!product) {res.status(404).json({ error: 'Produto não encontrado' });
+  if (!product) {
+    res.status(404).json({ error: 'Produto não encontrado' });
+    return;
+  }
+
+  if (price <= 0) {
+    res.status(400).json({ error: 'O preço unitário deve ser positivo' });
+    return;
+  }
+
+  if (stock <= 0) {
+    res.status(400).json({ error: 'A quantidade deve ser maior que 0' });
     return;
   }
 
   await product.update({ name, price, stock, description, supplier, imageUrl });
-   res.json(product);
+  res.json(product);
 };
 
 
-export const deleteProduct = async (req: Request, res: Response)  => {
+export const deleteProduct = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   const product = await Product.findByPk(id);
-  if (!product) { 
+  if (!product) {
     res.status(404).json({ error: 'Produto não encontrado' });
     return;
   }

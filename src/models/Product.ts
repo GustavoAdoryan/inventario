@@ -1,6 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config/database';
 import Supplier from './Supplier';
+import OrderItem from './OrderItem';
 
 class Product extends Model {
   public id!: number;
@@ -55,6 +56,7 @@ Product.init({
 
 Product.belongsTo(Supplier, { foreignKey: 'supplierId', as: 'supplier' });
 Supplier.hasMany(Product, { foreignKey: 'supplierId', as: 'products' });
+Product.hasMany(OrderItem, { foreignKey: 'productId', as: 'orderItems' });
 
 
 export default Product;

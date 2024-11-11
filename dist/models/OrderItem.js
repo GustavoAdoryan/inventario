@@ -3,37 +3,34 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Client = void 0;
 const sequelize_1 = require("sequelize");
 const database_1 = __importDefault(require("../config/database"));
-class Client extends sequelize_1.Model {
+class OrderItem extends sequelize_1.Model {
 }
-exports.Client = Client;
-Client.init({
+OrderItem.init({
     id: {
         type: sequelize_1.DataTypes.INTEGER,
-        autoIncrement: true,
         primaryKey: true,
+        autoIncrement: true,
     },
-    name: {
-        type: sequelize_1.DataTypes.STRING,
+    orderId: {
+        type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
     },
-    contact: {
-        type: sequelize_1.DataTypes.STRING,
+    productId: {
+        type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
     },
-    address: {
-        type: sequelize_1.DataTypes.STRING,
+    quantity: {
+        type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
     },
-    cpf_cnpj: {
-        type: sequelize_1.DataTypes.STRING,
+    price: {
+        type: sequelize_1.DataTypes.FLOAT,
         allowNull: false,
-        unique: true,
     },
 }, {
     sequelize: database_1.default,
-    modelName: 'Clients',
+    modelName: 'OrderItem',
 });
-exports.default = Client;
+exports.default = OrderItem;

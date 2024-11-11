@@ -6,16 +6,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = require("body-parser");
 const dotenv_1 = __importDefault(require("dotenv"));
-const cors_1 = __importDefault(require("cors"));
 const database_1 = __importDefault(require("./config/database"));
 const productRoutes_1 = __importDefault(require("./routes/productRoutes"));
 const clientRoutes_1 = __importDefault(require("./routes/clientRoutes"));
 const supplierRoutes_1 = __importDefault(require("./routes/supplierRoutes"));
+const orderRoutes_1 = __importDefault(require("./routes/orderRoutes"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000;
 app.use((0, body_parser_1.json)());
-app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.get('/', (req, res) => {
     res.send('Sistema de Gestão de Inventário');
@@ -23,6 +22,7 @@ app.get('/', (req, res) => {
 app.use('/api', productRoutes_1.default);
 app.use('/api', clientRoutes_1.default);
 app.use('/api', supplierRoutes_1.default);
+app.use('/api', orderRoutes_1.default);
 database_1.default.sync({ force: false }).then(() => {
     console.log('Banco de dados sincronizado');
 });

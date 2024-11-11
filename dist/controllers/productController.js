@@ -23,6 +23,10 @@ exports.getAllProducts = getAllProducts;
 const createProduct = async (req, res) => {
     const { name, price, stock, description, supplierID } = req.body;
     const imageURL = req.file ? req.file.path : null;
+    if (price <= 0) {
+        res.status(400).json({ error: 'O preço unitário deve ser positivo' });
+        return;
+    }
     const product = await Product_1.default.create({ name, price, stock, description, supplierID, imageURL });
     res.json(product);
 };
@@ -34,6 +38,14 @@ const updateProduct = async (req, res) => {
     const product = await Product_1.default.findByPk(id);
     if (!product) {
         res.status(404).json({ error: 'Produto não encontrado' });
+        return;
+    }
+    if (price <= 0) {
+        res.status(400).json({ error: 'O preço unitário deve ser positivo' });
+        return;
+    }
+    if (stock <= 0) {
+        res.status(400).json({ error: 'A quantidade deve ser maior que 0' });
         return;
     }
     await product.update({ name, price, stock, description, supplier, imageUrl });

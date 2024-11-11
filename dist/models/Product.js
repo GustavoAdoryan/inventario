@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const database_1 = __importDefault(require("../config/database"));
 const Supplier_1 = __importDefault(require("./Supplier"));
+const OrderItem_1 = __importDefault(require("./OrderItem"));
 class Product extends sequelize_1.Model {
 }
 Product.init({
@@ -50,4 +51,5 @@ Product.init({
 });
 Product.belongsTo(Supplier_1.default, { foreignKey: 'supplierId', as: 'supplier' });
 Supplier_1.default.hasMany(Product, { foreignKey: 'supplierId', as: 'products' });
+Product.hasMany(OrderItem_1.default, { foreignKey: 'productId', as: 'orderItems' });
 exports.default = Product;

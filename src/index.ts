@@ -9,6 +9,7 @@ import productRoutes from './routes/productRoutes';
 import clientRoutes from './routes/clientRoutes';
 import supplierRoutes from './routes/supplierRoutes';
 import orderRoutes from './routes/orderRoutes';
+import transactionRoutes from './routes/transactionRoutes';
 
 
 dotenv.config();
@@ -28,6 +29,7 @@ app.use('/api', productRoutes);
 app.use('/api', clientRoutes);
 app.use('/api', supplierRoutes);
 app.use('/api', orderRoutes);
+app.use('/api', transactionRoutes);
 
 sequelize.sync({ force: false }).then(() => {
   console.log('Banco de dados sincronizado');

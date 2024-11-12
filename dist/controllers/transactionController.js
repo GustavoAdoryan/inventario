@@ -9,26 +9,41 @@ const Product_1 = __importDefault(require("../models/Product"));
 const Order_1 = __importDefault(require("../models/Order"));
 const sequelize_1 = require("sequelize");
 const createTransaction = async (req, res) => {
-    const { orderId, productId, quantity, transactionType } = req.body;
+    const { productId, quantity, transactionType, transactionDate, orderId } = req.body;
     try {
         const order = await Order_1.default.findByPk(orderId);
+        if (!order) {
+            res.status(404).json({ error: 'Pedido não encontrado' });
+            return;
+        }
         const product = await Product_1.default.findByPk(productId);
-        if (!order || !product) {
-            res.status(404).json({ error: 'Pedido ou Produto não encontrado' });
+        if (!product) {
+            res.status(404).json({ error: 'Produto não encontrado' });
             return;
         }
         const transaction = await Transaction_1.default.create({
             productId,
             quantity,
             transactionType,
-            transactionDate: new Date(),
-            orderId
+            transactionDate,
+            orderId,
         });
-        res.status(201).json({ message: 'Transação registrada com sucesso', transaction });
+        if (transactionType === 'entrada') {
+            product.stock += quantity;
+        }
+        else if (transactionType === 'saída') {
+            product.stock -= quantity;
+        }
+        await product.save();
+        res.status(201).json({
+            message: 'Transação registrada com sucesso',
+            transaction,
+            updatedStock: product.stock,
+        });
     }
     catch (error) {
-        console.error('Erro ao registrar transação:', error);
-        res.status(500).json({ error: 'Erro ao registrar transação' });
+        console.error('Erro ao criar transação:', error);
+        res.status(500).json({ error: 'Erro ao criar a transação' });
     }
 };
 exports.createTransaction = createTransaction;

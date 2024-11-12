@@ -11,6 +11,7 @@ const productRoutes_1 = __importDefault(require("./routes/productRoutes"));
 const clientRoutes_1 = __importDefault(require("./routes/clientRoutes"));
 const supplierRoutes_1 = __importDefault(require("./routes/supplierRoutes"));
 const orderRoutes_1 = __importDefault(require("./routes/orderRoutes"));
+const transactionRoutes_1 = __importDefault(require("./routes/transactionRoutes"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000;
@@ -23,6 +24,7 @@ app.use('/api', productRoutes_1.default);
 app.use('/api', clientRoutes_1.default);
 app.use('/api', supplierRoutes_1.default);
 app.use('/api', orderRoutes_1.default);
+app.use('/api', transactionRoutes_1.default);
 database_1.default.sync({ force: false }).then(() => {
     console.log('Banco de dados sincronizado');
 });

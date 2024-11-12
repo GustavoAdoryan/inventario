@@ -1,32 +1,64 @@
-Crescente = http://localhost:3000/products?sort=price_asc
+Produtos
 
-Decrescente = http://localhost:3000/api/products?sort=price_desc
+    Crescente = http://localhost:3000/products?sort=price_asc
 
-Pegar tudo = http://localhost:3000/api/products
+    Decrescente = http://localhost:3000/api/products?sort=price_desc
 
-Alterar = http://localhost:3000/api/products/1 (id) e adicionar body
+    Pegar tudo = http://localhost:3000/api/products
 
-Deletar = http://localhost:3000/api/products/4 (id)
+    Alterar = http://localhost:3000/api/products/:id (Adicionar body)
+
+    Deletar = http://localhost:3000/api/products/:id
+
+    Criar = http://localhost:3000/api/products e Body com (name, price, stock, description, supplierId)
 
 
 
 Cliente
 
-nome
-contato
-endereço
-cpf/cnpj
+    Pegar tudo = http://localhost:3000/api/clients
+
+    Alterar = http://localhost:3000/api/clients/:id (Adicionar body)
+
+    Delete = http://localhost:3000/api/clients/:id
+
+    Criar = http://localhost:3000/api/clients e Body com (name, contact, address, cpf_cnpj )
+
+
+Fornecedor
+
+    Criar = http://localhost:3000/api/suppliers e Body com (name, cnpj, contact, address)
+
+    Alterar = http://localhost:3000/api/suppliers/:id (Adicionar body com o que deseja alterar)
+
+    Delete = http://localhost:3000/api/suppliers/:id 
+
+    Pegar tudo = http://localhost:3000/api/suppliers 
+
+
+Pedidos 
+
+    Criar = http://localhost:3000/api/orders e Body (clientId, items(productId, quantity))
+
+    Listar = http://localhost:3000/api/orders
+
+    Pegar items dos pedidos = http://localhost:3000/api/orders/:id/items
+
+    Atualizar = http://localhost:3000/api/orders/:id (Adicionar body com o que deseja alterar)
+
+    Deletar = http://localhost:3000/api/orders/:id 
+
+    AddItem = http://localhost:3000/api/orders/:id/items (Adicionar Body com productId e quantity)
+
+    DelItem = http://localhost:3000/api/orders/:idOrder/items/:IdOrderItem
 
 
 
-Produto
 
-nome
-preço
-estoque
-descrição
-imagem 
-fornecedor
+Transações 
+
+    Criar = http://localhost:3000/api/transactions e Body(productId, quantity, transactionType, transactionDate, oderId)
+
+    Listar = http://localhost:3000/api/transactions
 
 
-nome, cnpj 

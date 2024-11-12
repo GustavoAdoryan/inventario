@@ -136,6 +136,7 @@ export const deleteOrder = async (req: Request, res: Response) => {
 
 
 export const listOrderItems = async (req: Request, res: Response) => {
+    const { id } = req.params;
 
     try {
         const orders = await Order.findAll({
@@ -168,21 +169,36 @@ export const addOrderItem = async (req: Request, res: Response) => {
             return;
         }
 
+
+
         if (quantity <= 0) {
             res.status(400).json({ error: 'A quantidade deve ser maior que 0' });
             return;
         }
 
+
+        const totalPrice = product.price * quantity;
         const orderItem = await OrderItem.create({
             orderId,
             productId,
             quantity,
-            price: product.price * quantity
+            price: totalPrice
         });
 
-        res.status(201).json({ message: 'Item adicionado ao pedido com sucesso', orderItem });
+        await Order.update(
+            { totalAmount: order.totalAmount + totalPrice },
+            { where: { id: orderId } }
+        );
+
+        const updatedOrder = await Order.findByPk(orderId);
+
+        res.status(201).json({
+            message: 'Item adicionado ao pedido com sucesso',
+            orderItem,
+            updatedTotalAmount: updatedOrder?.totalAmount
+        });
     } catch (error) {
-        console.error('Erro ao adicionar item ao pedido:', error);
+
         res.status(500).json({ error: 'Erro ao adicionar item ao pedido' });
     }
 };

@@ -1,17 +1,15 @@
-import { DataTypes, Model } from "sequelize";
-import sequelize from "../config/database";
-import Order from './Order';
+import { DataTypes, Model } from 'sequelize';
+import sequelize from '../config/database';
+import User from './User';
 
-export class Client extends Model {
-
+class Client extends Model {
     public id!: number;
-    public name!: string;
+    public cpf_cnpj!: string;
     public contact!: string;
     public address!: string;
-    public cpf_cnpj!: string;
-    public createdAt!: Date;
-    public updatedAt!: Date;
-
+    public userId!: number;
+    public readonly createdAt!: Date;
+    public readonly updatedAt!: Date;
 }
 
 Client.init(
@@ -21,9 +19,10 @@ Client.init(
             autoIncrement: true,
             primaryKey: true,
         },
-        name: {
+        cpf_cnpj: {
             type: DataTypes.STRING,
             allowNull: false,
+            unique: true,
         },
         contact: {
             type: DataTypes.STRING,
@@ -33,18 +32,30 @@ Client.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        cpf_cnpj: {
+        name: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true,
+        },
+        email: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        userId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: User,
+                key: 'id',
+            },
         },
     },
     {
         sequelize,
-        modelName: 'Clients',
+        tableName: 'Clients',
     }
 );
 
-
+Client.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+User.hasOne(Client, { foreignKey: 'userId', as: 'client' });
 
 export default Client;

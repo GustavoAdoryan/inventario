@@ -1,9 +1,16 @@
 import { Router } from 'express';
-import { createTransaction, listTransactions } from '../controllers/transactionController';
+import {
+    createTransaction,
+    listTransactions
+} from '../controllers/transactionController';
+import { authenticateToken, authorizeAdmin } from '../middlewares/authMiddleware';
 
 const router = Router();
 
-router.post('/transactions', createTransaction);
-router.get('/transactions', listTransactions);
+// Apenas Admin pode criar transações
+router.post('/transactions', authenticateToken, authorizeAdmin, createTransaction);
+
+// Admin e Client podem visualizar transações
+router.get('/transactions', authenticateToken, listTransactions);
 
 export default router;

@@ -1,13 +1,20 @@
 import { Router } from "express";
-import { createClient, deleteClient, getAllClients, updateClient } from "../controllers/clientController";
-
+import {
+    createClient,
+    deleteClient,
+    getAllClients,
+    updateClient
+} from "../controllers/clientController";
+import { authenticateToken, authorizeAdmin } from "../middlewares/authMiddleware";
 
 const router = Router();
 
-router.post('/clients', createClient);
-router.get('/clients', getAllClients);
-router.put('/clients/:id', updateClient);
-router.delete('/clients/:id', deleteClient);
+// Apenas Admin pode criar, atualizar e deletar clientes
+router.post('/clients', authenticateToken, authorizeAdmin, createClient);
+router.put('/clients/:id', authenticateToken, authorizeAdmin, updateClient);
+router.delete('/clients/:id', authenticateToken, authorizeAdmin, deleteClient);
 
+// Admin e Client podem visualizar a lista de clientes
+router.get('/clients', authenticateToken, getAllClients);
 
 export default router;

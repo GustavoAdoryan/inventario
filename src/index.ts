@@ -1,15 +1,15 @@
-import express from 'express';
 import { json } from 'body-parser';
 import dotenv from 'dotenv';
-import cors from 'cors';
+import express from 'express';
 
 
 import sequelize from './config/database';
-import productRoutes from './routes/productRoutes';
 import clientRoutes from './routes/clientRoutes';
-import supplierRoutes from './routes/supplierRoutes';
 import orderRoutes from './routes/orderRoutes';
+import productRoutes from './routes/productRoutes';
+import supplierRoutes from './routes/supplierRoutes';
 import transactionRoutes from './routes/transactionRoutes';
+import userRoutes from './routes/userRoutes';
 
 
 dotenv.config();
@@ -30,6 +30,7 @@ app.use('/api', clientRoutes);
 app.use('/api', supplierRoutes);
 app.use('/api', orderRoutes);
 app.use('/api', transactionRoutes);
+app.use('/api', userRoutes);
 
 sequelize.sync({ force: false }).then(() => {
   console.log('Banco de dados sincronizado');

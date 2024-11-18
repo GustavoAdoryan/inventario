@@ -1,17 +1,28 @@
 import { Router } from 'express';
-import { createOrder, getAllOrders, updateOrder, deleteOrder, listOrderItems, addOrderItem, removeOrderItem } from '../controllers/orderController';
+import {
+    addOrderItem,
+    createOrder,
+    deleteOrder,
+    getAllOrders,
+    listOrderItems,
+    removeOrderItem,
+    updateOrder
+} from '../controllers/orderController';
+import { authenticateToken, authorizeAdmin } from '../middlewares/authMiddleware';
 
 const router = Router();
 
-router.post('/orders', createOrder);
+// Apenas Admin pode criar, atualizar e deletar pedidos
+router.post('/orders', authenticateToken, authorizeAdmin, createOrder);
+router.put('/orders/:id', authenticateToken, authorizeAdmin, updateOrder);
+router.delete('/orders/:id', authenticateToken, authorizeAdmin, deleteOrder);
 
-router.get('/orders', getAllOrders);
-router.get('/orders/:orderId/items', listOrderItems);
+// Admin e Client podem visualizar pedidos e itens relacionados
+router.get('/orders', authenticateToken, getAllOrders);
+router.get('/orders/:orderId/items', authenticateToken, listOrderItems);
 
-router.put('/orders/:id', updateOrder);
-router.delete('/orders/:id', deleteOrder);
-
-router.post('/orders/:orderId/items', addOrderItem);
-router.delete('/orders/:id/items/:orderItemId', removeOrderItem);
+// Apenas Admin pode adicionar ou remover itens em pedidos
+router.post('/orders/:orderId/items', authenticateToken, authorizeAdmin, addOrderItem);
+router.delete('/orders/:id/items/:orderItemId', authenticateToken, authorizeAdmin, removeOrderItem);
 
 export default router;

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import Order from '../models/Order';
 import OrderItem from '../models/OrderItem';
 import Product from '../models/Product';
-import { Client } from '../models/Client';
+import Client from '../models/Client';
 
 
 
